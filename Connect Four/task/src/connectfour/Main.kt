@@ -46,4 +46,6 @@ fun main() {
 
     println("$player1 vs $player2")
     println("$rows x $columns board")
+
+    //val cinema = Array(rows) { CharArray(seats) { 'S' } }
 }
