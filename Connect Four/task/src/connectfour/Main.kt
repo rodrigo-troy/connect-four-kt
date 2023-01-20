@@ -22,6 +22,12 @@ fun validateInput(input: String): Boolean {
     }
 }
 
+fun printEmptyBoard(rows: Int, columns: Int) {
+    println("  ${1.rangeTo(columns).joinToString(" ")}")
+    print(" ${"║ ".repeat(columns + 1).trimEnd()}\n".repeat(rows))
+    println(" ╚═${"╩═".repeat(columns - 1)}╝")
+}
+
 fun main() {
     println("Connect Four")
 
@@ -30,7 +36,6 @@ fun main() {
 
     println("Second player's name:")
     val player2 = readln()
-
 
     println("Set the board dimensions (Rows x Columns)")
     println("Press Enter for default (6 x 7)")
@@ -47,5 +52,5 @@ fun main() {
     println("$player1 vs $player2")
     println("$rows x $columns board")
 
-    //val cinema = Array(rows) { CharArray(seats) { 'S' } }
+    printEmptyBoard(rows, columns)
 }
