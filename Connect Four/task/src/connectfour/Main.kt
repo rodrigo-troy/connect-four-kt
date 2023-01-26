@@ -57,7 +57,6 @@ fun main() {
         val column = readln()
 
         if (column == "end") {
-            println("Game over!")
             break
         }
 
@@ -68,9 +67,73 @@ fun main() {
         if (isColumnFull(board, column.toInt())) continue
 
         addMove(board, column.toInt(), isPlayer1Turn)
-        isPlayer1Turn = !isPlayer1Turn
         printBoard(board)
+
+        if (isBoardFull(board)) break
+
+        if (checkWinner(board, player1, player2)) break
+
+        isPlayer1Turn = !isPlayer1Turn
     }
+
+    println("Game over!")
+}
+
+fun isBoardFull(board: Array<CharArray>): Boolean {
+    return if (board.all { it.all { it != ' ' } }) {
+        println("It is a draw")
+        true
+    } else false
+}
+
+fun checkWinner(board: Array<CharArray>, player1: String, player2: String): Boolean {
+    val rows = board.size
+    val columns = board[0].size
+
+    for (row in 0 until rows) {
+        for (column in 0 until columns) {
+            if (board[row][column] != ' ') {
+                if (column + 3 < columns &&
+                    board[row][column] == board[row][column + 1] &&
+                    board[row][column] == board[row][column + 2] &&
+                    board[row][column] == board[row][column + 3]
+                ) {
+                    println("Player ${if (board[row][column] == 'o') player1 else player2} won")
+                    return true
+                }
+
+                if (row + 3 < rows) {
+                    if (board[row][column] == board[row + 1][column] &&
+                        board[row][column] == board[row + 2][column] &&
+                        board[row][column] == board[row + 3][column]
+                    ) {
+                        println("Player ${if (board[row][column] == 'o') player1 else player2} won")
+                        return true
+                    }
+
+                    if (column + 3 < columns &&
+                        board[row][column] == board[row + 1][column + 1] &&
+                        board[row][column] == board[row + 2][column + 2] &&
+                        board[row][column] == board[row + 3][column + 3]
+                    ) {
+                        println("Player ${if (board[row][column] == 'o') player1 else player2} won")
+                        return true
+                    }
+
+                    if (column - 3 >= 0 &&
+                        board[row][column] == board[row + 1][column - 1] &&
+                        board[row][column] == board[row + 2][column - 2] &&
+                        board[row][column] == board[row + 3][column - 3]
+                    ) {
+                        println("Player ${if (board[row][column] == 'o') player1 else player2} won")
+                        return true
+                    }
+                }
+            }
+        }
+    }
+
+    return false
 }
 
 fun isNotNumber(column: String): Boolean {
